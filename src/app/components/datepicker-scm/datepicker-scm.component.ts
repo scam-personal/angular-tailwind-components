@@ -29,7 +29,7 @@ export class DatepickerScmComponent implements OnInit {
   showMonthSelector: boolean = false;
 
   userSelectedDateSCM!: DateSCM;
-  @Output() onDateSelected: EventEmitter<any> = new EventEmitter<any>();
+  @Output('onDateSelected') onDateSelected: EventEmitter<DateSCM> = new EventEmitter();
 
   constructor() {
     this.weekDays = WeekDays;
@@ -42,7 +42,6 @@ export class DatepickerScmComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCalendarDays();
-    console.log(this.showingDateSCM.month);
   }
 
   userSelectDate(selectedDay: number) {
@@ -51,6 +50,7 @@ export class DatepickerScmComponent implements OnInit {
       this.showingDateSCM.month,
       selectedDay
     );
+    this.onDateSelected.emit(this.userSelectedDateSCM);
   }
 
   isToday(day: number) {

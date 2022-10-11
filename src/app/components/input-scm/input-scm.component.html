@@ -1,0 +1,12 @@
+<div class="dropdown-datepicker">
+  <input
+    class="w-40 border border-solid bg-slate-100"
+    type="text"
+    [(ngModel)]="dateInput"
+    (click)="showHidePicker()"
+  />
+  <app-datepicker-scm
+    *ngIf="showdatePicker"
+    (onDateSelected)="dateSelected($event)"
+  ></app-datepicker-scm>
+</div>

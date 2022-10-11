@@ -4,6 +4,8 @@ export interface dateSCM {
   month: number;
   totalDays: number;
   firstDayNumber: number;
+  format: string;
+  value: string;
 }
 
 export class DateSCM {
@@ -21,11 +23,37 @@ export class DateSCM {
       month: monthSCM,
       totalDays: new Date(yearSCM, monthSCM, 0).getDate(),
       firstDayNumber: new Date(yearSCM, monthSCM - 1).getDay(),
+      format: "dd/mm/yyyy",
+      value: `${currDate.getDate()}/${monthSCM}/${yearSCM}`,
     };
   }
 
   public get currentDate(): dateSCM {
     return this.currentDateSCM;
+  }
+
+  public get format(): string {
+    return this.currentDateSCM.format;
+  }
+
+  public get value(): string {
+    return this.currentDateSCM.value;
+  }
+
+  public get year(): number {
+    return this.currentDateSCM.year;
+  }
+
+  public get month(): number {
+    return this.currentDateSCM.month;
+  }
+
+  public get totalDays(): number {
+    return this.currentDateSCM.totalDays;
+  }
+
+  public get firstDayNumber(): number {
+    return this.currentDateSCM.firstDayNumber;
   }
 
   public static isToday(date?: Date | dateSCM) {

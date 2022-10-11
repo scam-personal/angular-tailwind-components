@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import {
   DaysModule,
   DaysToShowMax,
@@ -23,6 +23,9 @@ export class DatepickerScmComponent implements OnInit {
   weekDays!: Array<string>;
   months!: Array<string>;
 
+  userSelectedDateSCM!: DateSCM;
+  @Output() onDateSelected: EventEmitter<any> = new EventEmitter<any>();
+
   constructor() {
     this.weekDays = WeekDays;
     this.months = Months;
@@ -34,6 +37,15 @@ export class DatepickerScmComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCalendarDays();
+  }
+
+  userSelectDate(selectedDay: number) {
+    let showingDate = this.showingDateSCM.currentDate;
+    this.userSelectedDateSCM = new DateSCM(
+      showingDate.year,
+      showingDate.month,
+      selectedDay
+    );
   }
 
   isToday(day: number) {

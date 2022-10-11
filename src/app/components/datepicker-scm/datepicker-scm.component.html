@@ -31,6 +31,7 @@
             <div
               [ngClass]="{ today: isToday(dayCell) }"
               class="calendar-table-cell"
+              (click)="userSelectDate(dayCell)"
             >
               {{ dayCell }}
             </div>

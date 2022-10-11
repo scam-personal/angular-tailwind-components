@@ -39,7 +39,7 @@ table td:nth-child(1) {
 
 //need to be in general styles comming up
 .dropdown-selector {
-  @apply relative inline-block cursor-pointer hover:shadow-md py-1 px-2 rounded-lg;
+  @apply relative inline-block cursor-pointer;
 }
 
 // .calendar-footer {

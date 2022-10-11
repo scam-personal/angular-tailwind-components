@@ -1,0 +1,38 @@
+<div class="calendar">
+  <div class="calendar-header">
+    <button (click)="goPrevMonth()">&#60;</button>
+    <p class="mx-1">{{ months[showingDateSCM.currentDate.month - 1] }}</p>
+    <p class="mx-1">{{ showingDateSCM.currentDate.year }}</p>
+    <button (click)="goNextMonth()">&#62;</button>
+  </div>
+  <div class="calendar-table-container">
+    <table>
+      <tr>
+        <th class="w-10" *ngFor="let weekDay of weekDays">{{ weekDay }}</th>
+      </tr>
+      <tr *ngFor="let daysRow of calendarDays; index as dayRow">
+        <td *ngFor="let dayCell of daysRow">
+          <div
+            *ngIf="
+              (dayRow >= 4 && dayCell <= 7) || (dayRow <= 1 && dayCell >= 24);
+              else availableDay
+            "
+          >
+            <div class="disabled-days">
+              {{ dayCell }}
+            </div>
+          </div>
+          <ng-template #availableDay>
+            <div class="calendar-table-cell">
+              {{ dayCell }}
+            </div>
+          </ng-template>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <!-- <div class="calendar-footer">
+    <button class="ok">OK</button>
+    <button>CANCEL</button>
+  </div> -->
+</div>

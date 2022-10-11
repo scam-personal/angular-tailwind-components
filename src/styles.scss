@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* scm styles */
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    left: 0px;
+    top: 0px;
+}

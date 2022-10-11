@@ -1,0 +1,47 @@
+.calendar {
+  @apply flex flex-col w-full bg-slate-100 rounded-lg px-4 pt-4 pb-2 shadow-md shadow-slate-400;
+}
+
+.calendar-header {
+  @apply flex flex-row w-full justify-around mb-1 py-2;
+}
+
+.calendar-header button {
+  @apply bg-slate-500 px-3 text-white font-semibold rounded-md;
+  @apply transform duration-75 hover:scale-105;
+}
+
+.calendar-table-container {
+  @apply flex justify-center;
+}
+
+.calendar table {
+  @apply w-11/12 h-auto text-center table-fixed;
+}
+
+.calendar-table-cell {
+  @apply border-solid border-2 cursor-pointer;
+  @apply hover:bg-slate-300;
+  @apply transform duration-75 delay-75 hover:font-bold hover:rounded-full hover:border-slate-600;
+}
+
+.disabled-days {
+  @apply text-slate-400 cursor-default border-solid border-2;
+}
+
+table td:nth-child(1) {
+  @apply bg-slate-300;
+} 
+
+// .calendar-footer {
+//   @apply flex flex-row w-full justify-around mt-2 py-2;
+// }
+
+// .calendar-footer button {
+//   @apply bg-slate-400 text-white px-3 py-1 rounded-md;
+//   @apply transform duration-75 hover:scale-105;
+// }
+
+// .calendar-footer .ok {
+//   @apply bg-slate-500 font-semibold;
+// }

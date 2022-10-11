@@ -1,14 +1,22 @@
 .dropdown-content {
-  @apply hidden absolute bg-slate-100 min-h-[192px] overflow-auto;
-  @apply shadow-md shadow-slate-800 z-10;
+  @apply absolute bg-slate-100 py-1 px-2 max-h-[192px] overflow-auto;
+  @apply shadow-md shadow-slate-400 z-10 rounded-b-lg rounded-tr-lg;
+}
+
+.dropdown-content::-webkit-scrollbar {
+  @apply hidden;
 }
 
 .dropdown-content a {
-  @apply block text-black py-1 px-2;
+  @apply block ;
 }
 
-.dropdown a:hover {
-  @apply bg-slate-300;
+.item-container {
+    @apply py-1 px-2 hover:bg-slate-300 rounded-lg;
+}
+
+.selected {
+  @apply bg-slate-500 text-white rounded-lg;
 }
 
 .show {

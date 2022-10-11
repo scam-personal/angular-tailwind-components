@@ -1,8 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import {
+  AddYears,
   DaysModule,
   DaysToShowMax,
   DaysToShowMin,
+  FromYear,
   Months,
   WeekDays,
 } from "./date-constants";
@@ -23,6 +25,9 @@ export class DatepickerScmComponent implements OnInit {
   weekDays!: Array<string>;
   months!: Array<string>;
 
+  showYearSelector: boolean = false;
+  showMonthSelector: boolean = false;
+
   userSelectedDateSCM!: DateSCM;
   @Output() onDateSelected: EventEmitter<any> = new EventEmitter<any>();
 
@@ -37,22 +42,45 @@ export class DatepickerScmComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCalendarDays();
+    console.log(this.showingDateSCM.month);
   }
 
   userSelectDate(selectedDay: number) {
-    let showingDate = this.showingDateSCM.currentDate;
     this.userSelectedDateSCM = new DateSCM(
-      showingDate.year,
-      showingDate.month,
+      this.showingDateSCM.year,
+      this.showingDateSCM.month,
       selectedDay
     );
   }
 
   isToday(day: number) {
-    let dateShowed = this.showingDateSCM.currentDate;
     return DateSCM.isToday(
-      new Date(dateShowed.year, dateShowed.month - 1, day)
+      new Date(this.showingDateSCM.year, this.showingDateSCM.month - 1, day)
     );
+  }
+
+  getYearsArray() {
+    let yearsArray = [];
+    let maxYear = this.currentDateSCM.year + AddYears;
+    for (let year = FromYear; year < maxYear; year++) yearsArray.push(year);
+    return yearsArray;
+  }
+
+  optionSelected(item: string) {
+    let indexMonth = this.months.indexOf(item);
+    if (indexMonth >= 0)
+      this.showingDateSCM = new DateSCM(
+        this.showingDateSCM.year,
+        indexMonth + 1
+      );
+    else
+      this.showingDateSCM = new DateSCM(
+        parseInt(item),
+        this.showingDateSCM.month
+      );
+    this.getCalendarDays();
+    this.showMonthSelector = false;
+    this.showYearSelector = false;
   }
 
   goPrevMonth() {
@@ -67,6 +95,16 @@ export class DatepickerScmComponent implements OnInit {
     this.showingDateSCM = this.nextDateSCM;
     this.nextDateSCM = this.showingDateSCM.getNextDate();
     this.getCalendarDays();
+  }
+
+  showHideMonthSelector() {
+    this.showMonthSelector = !this.showMonthSelector;
+    this.showYearSelector = false;
+  }
+
+  showHideYearSelector() {
+    this.showYearSelector = !this.showYearSelector;
+    this.showMonthSelector = false;
   }
 
   private getCalendarDays() {

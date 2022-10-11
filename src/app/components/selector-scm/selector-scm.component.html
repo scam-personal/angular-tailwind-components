@@ -1,7 +1,11 @@
-<div class="dropdown">
-  <div class="dropdown-content">
-    <a *ngFor="let item of collection"
-      ><p>{{ item }}</p></a
-    >
+<div class="dropdown-content">
+  <div
+    class="item-container"
+    [ngClass]="{ selected: item == selectedItem }"
+    *ngFor="let item of collection; index as i"
+  >
+    <a [id]="i + item.toString()" (click)="itemSelected(item)">
+      {{ item }}
+    </a>
   </div>
 </div>

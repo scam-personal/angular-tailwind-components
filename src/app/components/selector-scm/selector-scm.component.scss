@@ -1,0 +1,16 @@
+.dropdown-content {
+  @apply hidden absolute bg-slate-100 min-h-[192px] overflow-auto;
+  @apply shadow-md shadow-slate-800 z-10;
+}
+
+.dropdown-content a {
+  @apply block text-black py-1 px-2;
+}
+
+.dropdown a:hover {
+  @apply bg-slate-300;
+}
+
+.show {
+  @apply block;
+}

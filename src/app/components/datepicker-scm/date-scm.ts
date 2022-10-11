@@ -28,6 +28,22 @@ export class DateSCM {
     return this.currentDateSCM;
   }
 
+  public static isToday(date?: Date | dateSCM) {
+    let today = new Date();
+    let isToday: boolean = false;
+    let compareDate;
+    if (date instanceof Date) compareDate = date;
+    else compareDate = date?.currentDate;
+    if (
+      compareDate &&
+      compareDate.getDate() == today.getDate() &&
+      compareDate.getMonth() == today.getMonth() &&
+      compareDate.getFullYear() == today.getFullYear()
+    )
+      isToday = true;
+    return isToday;
+  }
+
   public getPreviousDate() {
     let month = this.currentDate.month - 1;
     let year = this.currentDate.year;
@@ -38,7 +54,7 @@ export class DateSCM {
     return new DateSCM(year, month);
   }
 
-  public getNextDate(){
+  public getNextDate() {
     let month = this.currentDate.month + 1;
     let year = this.currentDate.year;
     if (month == 13) {

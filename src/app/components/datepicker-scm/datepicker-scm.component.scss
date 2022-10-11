@@ -21,8 +21,12 @@
 
 .calendar-table-cell {
   @apply border-solid border-2 cursor-pointer;
-  @apply hover:bg-slate-300;
+  @apply hover:bg-slate-300 hover:scale-110;
   @apply transform duration-75 delay-75 hover:font-bold hover:rounded-full hover:border-slate-600;
+}
+
+.today {
+  @apply rounded-full underline underline-offset-4 font-bold bg-slate-200;
 }
 
 .disabled-days {
@@ -31,7 +35,12 @@
 
 table td:nth-child(1) {
   @apply bg-slate-300;
-} 
+}
+
+//need to be in general styles comming up
+.dropdown-selector {
+  @apply relative inline-block cursor-pointer hover:shadow-md py-1 px-2 rounded-lg;
+}
 
 // .calendar-footer {
 //   @apply flex flex-row w-full justify-around mt-2 py-2;

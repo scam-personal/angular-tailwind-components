@@ -1,8 +1,13 @@
 <div class="calendar">
   <div class="calendar-header">
     <button (click)="goPrevMonth()">&#60;</button>
-    <p class="mx-1">{{ months[showingDateSCM.currentDate.month - 1] }}</p>
-    <p class="mx-1">{{ showingDateSCM.currentDate.year }}</p>
+    <div class="dropdown-selector">
+      <p class="mx-1">{{ months[showingDateSCM.currentDate.month - 1] }}</p>
+      <app-selector-scm></app-selector-scm>
+    </div>
+    <div class="dropdown-selector">
+      <p class="mx-1">{{ showingDateSCM.currentDate.year }}</p>
+    </div>
     <button (click)="goNextMonth()">&#62;</button>
   </div>
   <div class="calendar-table-container">
@@ -23,7 +28,10 @@
             </div>
           </div>
           <ng-template #availableDay>
-            <div class="calendar-table-cell">
+            <div
+              [ngClass]="{ today: isToday(dayCell) }"
+              class="calendar-table-cell"
+            >
               {{ dayCell }}
             </div>
           </ng-template>

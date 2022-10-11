@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 import {
   DaysModule,
   DaysToShowMax,
   DaysToShowMin,
   Months,
   WeekDays,
-} from './date-constants';
-import { DateSCM } from './date-scm';
+} from "./date-constants";
+import { DateSCM } from "./date-scm";
 
 @Component({
-  selector: 'app-datepicker-scm',
-  templateUrl: './datepicker-scm.component.html',
-  styleUrls: ['./datepicker-scm.component.scss'],
+  selector: "app-datepicker-scm",
+  templateUrl: "./datepicker-scm.component.html",
+  styleUrls: ["./datepicker-scm.component.scss"],
 })
 export class DatepickerScmComponent implements OnInit {
   currentDateSCM!: DateSCM;
@@ -34,6 +34,13 @@ export class DatepickerScmComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCalendarDays();
+  }
+
+  isToday(day: number) {
+    let dateShowed = this.showingDateSCM.currentDate;
+    return DateSCM.isToday(
+      new Date(dateShowed.year, dateShowed.month - 1, day)
+    );
   }
 
   goPrevMonth() {

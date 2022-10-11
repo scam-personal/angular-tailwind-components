@@ -10,6 +10,7 @@ import { CardContainerComponent } from './home/routes-to/card-container/card-con
 import { NgScamComponentsComponent } from './home/ng-scam-components/ng-scam-components.component';
 import { CardScmComponent } from './components/card-scm/card-scm.component';
 import { DatepickerScmComponent } from './components/datepicker-scm/datepicker-scm.component';
+import { SelectorScmComponent } from './components/selector-scm/selector-scm.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { DatepickerScmComponent } from './components/datepicker-scm/datepicker-s
     CardContainerComponent,
     NgScamComponentsComponent,
     CardScmComponent,
-    DatepickerScmComponent
+    DatepickerScmComponent,
+    SelectorScmComponent
   ],
   imports: [
     BrowserModule,

@@ -11,6 +11,8 @@ import { NgScamComponentsComponent } from './home/ng-scam-components/ng-scam-com
 import { CardScmComponent } from './components/card-scm/card-scm.component';
 import { DatepickerScmComponent } from './components/datepicker-scm/datepicker-scm.component';
 import { SelectorScmComponent } from './components/selector-scm/selector-scm.component';
+import { InputScmComponent } from './components/input-scm/input-scm.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,11 +24,13 @@ import { SelectorScmComponent } from './components/selector-scm/selector-scm.com
     NgScamComponentsComponent,
     CardScmComponent,
     DatepickerScmComponent,
-    SelectorScmComponent
+    SelectorScmComponent,
+    InputScmComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

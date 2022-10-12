@@ -1,12 +1,27 @@
-import { Component, OnInit } from "@angular/core";
 import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  OnInit,
+  Output,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+} from "@angular/core";
+import { SelectorScmComponent } from "../selector-scm/selector-scm.component";
+import {
+  AddYears,
   DaysModule,
   DaysToShowMax,
   DaysToShowMin,
+  FromYear,
   Months,
   WeekDays,
 } from "./date-constants";
 import { DateSCM } from "./date-scm";
+
+const FirstElement: number = 0;
 
 @Component({
   selector: "app-datepicker-scm",
@@ -23,6 +38,17 @@ export class DatepickerScmComponent implements OnInit {
   weekDays!: Array<string>;
   months!: Array<string>;
 
+  showYearSelector: boolean = false;
+  showMonthSelector: boolean = false;
+
+  userSelectedDateSCM!: DateSCM;
+  @Output("onSelect") onDateSelected: EventEmitter<DateSCM> =
+    new EventEmitter();
+
+  @ViewChild("datepicker", { static: true }) datepicker!: ElementRef;
+  @ViewChildren(SelectorScmComponent)
+  selectors!: QueryList<SelectorScmComponent>;
+
   constructor() {
     this.weekDays = WeekDays;
     this.months = Months;
@@ -36,11 +62,43 @@ export class DatepickerScmComponent implements OnInit {
     this.getCalendarDays();
   }
 
-  isToday(day: number) {
-    let dateShowed = this.showingDateSCM.currentDate;
-    return DateSCM.isToday(
-      new Date(dateShowed.year, dateShowed.month - 1, day)
+  userSelectDate(selectedDay: number) {
+    this.userSelectedDateSCM = new DateSCM(
+      this.showingDateSCM.year,
+      this.showingDateSCM.month,
+      selectedDay
     );
+    this.onDateSelected.emit(this.userSelectedDateSCM);
+  }
+
+  isToday(day: number) {
+    return DateSCM.isToday(
+      new Date(this.showingDateSCM.year, this.showingDateSCM.month - 1, day)
+    );
+  }
+
+  getYearsArray() {
+    let yearsArray = [];
+    let maxYear = this.currentDateSCM.year + AddYears;
+    for (let year = FromYear; year < maxYear; year++) yearsArray.push(year);
+    return yearsArray;
+  }
+
+  optionSelected(item: string) {
+    let indexMonth = this.months.indexOf(item);
+    if (indexMonth >= 0)
+      this.showingDateSCM = new DateSCM(
+        this.showingDateSCM.year,
+        indexMonth + 1
+      );
+    else
+      this.showingDateSCM = new DateSCM(
+        parseInt(item),
+        this.showingDateSCM.month
+      );
+    this.getCalendarDays();
+    this.showMonthSelector = false;
+    this.showYearSelector = false;
   }
 
   goPrevMonth() {
@@ -55,6 +113,16 @@ export class DatepickerScmComponent implements OnInit {
     this.showingDateSCM = this.nextDateSCM;
     this.nextDateSCM = this.showingDateSCM.getNextDate();
     this.getCalendarDays();
+  }
+
+  showHideMonthSelector() {
+    this.showMonthSelector = !this.showMonthSelector;
+    this.showYearSelector = false;
+  }
+
+  showHideYearSelector() {
+    this.showYearSelector = !this.showYearSelector;
+    this.showMonthSelector = false;
   }
 
   private getCalendarDays() {
@@ -102,5 +170,23 @@ export class DatepickerScmComponent implements OnInit {
         this.daysArray.slice(DaysModule * (index - 1), DaysModule * index)
       );
     return calendarDaysMatrix;
+  }
+
+  public get elementRef(): ElementRef {
+    return this.datepicker;
+  }
+
+  @HostListener("document:click", ["$event"])
+  onClick(event: any): void {
+    // let isSelector = this.selectors
+    //   .get(FirstElement)
+    //   ?.elementRef.nativeElement.contains(event.target);
+    let isDatepikerClicked = this.elementRef.nativeElement.contains(event.target);
+    // if (isSelector | isDatepiker) event.stopPropagation();
+    // else {
+    //   this.showMonthSelector = false;
+    //   this.showYearSelector = false;
+    // }
+    console.log("datepicker: ", isDatepikerClicked);
   }
 }

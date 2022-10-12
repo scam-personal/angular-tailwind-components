@@ -1,12 +1,27 @@
-<div class="calendar">
+<div #datepicker id="datepicker" class="calendar">
   <div class="calendar-header">
     <button (click)="goPrevMonth()">&#60;</button>
     <div class="dropdown-selector">
-      <p class="mx-1">{{ months[showingDateSCM.currentDate.month - 1] }}</p>
-      <app-selector-scm></app-selector-scm>
+      <p class="mx-1" (click)="showHideMonthSelector()">
+        {{ months[showingDateSCM.currentDate.month - 1] }}
+      </p>
+      <app-selector-scm
+        *ngIf="showMonthSelector"
+        [collection]="months"
+        [selectedItem]="months[showingDateSCM.month - 1]"
+        (onSelected)="optionSelected($event.toString())"
+      ></app-selector-scm>
     </div>
     <div class="dropdown-selector">
-      <p class="mx-1">{{ showingDateSCM.currentDate.year }}</p>
+      <p class="mx-1" (click)="showHideYearSelector()">
+        {{ showingDateSCM.currentDate.year }}
+      </p>
+      <app-selector-scm
+        *ngIf="showYearSelector"
+        [collection]="getYearsArray()"
+        [selectedItem]="showingDateSCM.year"
+        (onSelected)="optionSelected($event.toString())"
+      ></app-selector-scm>
     </div>
     <button (click)="goNextMonth()">&#62;</button>
   </div>
@@ -31,6 +46,7 @@
             <div
               [ngClass]="{ today: isToday(dayCell) }"
               class="calendar-table-cell"
+              (click)="userSelectDate(dayCell)"
             >
               {{ dayCell }}
             </div>

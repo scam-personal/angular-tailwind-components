@@ -1,10 +1,13 @@
-<div #selector class="dropdown-content">
+<div #selector id="selector" class="dropdown-content">
   <div
     class="item-container"
     [ngClass]="{ selected: item == selectedItem }"
     *ngFor="let item of collection; index as i"
   >
-    <a [id]="i + item.toString()" (click)="itemSelected(item)">
+    <a
+      [id]="i + item.toString()"
+      (click)="itemSelected(item); $event.stopPropagation()"
+    >
       {{ item }}
     </a>
   </div>

@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  HostListener,
   Input,
   Output,
   ViewChild,
@@ -20,7 +21,7 @@ export class SelectorScmComponent implements AfterViewInit {
   @Output("onSelected") onSelected: EventEmitter<number | string> =
     new EventEmitter();
 
-  @ViewChild("selector") selector!: ElementRef;
+  @ViewChild("selector", { static: true }) selector!: ElementRef;
 
   constructor() {}
 
@@ -39,5 +40,17 @@ export class SelectorScmComponent implements AfterViewInit {
 
   itemSelected(item: number | string) {
     this.onSelected.emit(item);
+  }
+
+  public get elementRef(): ElementRef {
+    return this.selector;
+  }
+
+  @HostListener("document:click", ["$event"])
+  onClick(event: any): void {
+    let isSelectorClicked = this.elementRef.nativeElement.contains(
+      event.target
+    );
+    console.log("selector: ", isSelectorClicked);
   }
 }

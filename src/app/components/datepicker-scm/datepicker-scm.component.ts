@@ -2,10 +2,14 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  HostListener,
   OnInit,
   Output,
+  QueryList,
   ViewChild,
+  ViewChildren,
 } from "@angular/core";
+import { SelectorScmComponent } from "../selector-scm/selector-scm.component";
 import {
   AddYears,
   DaysModule,
@@ -16,6 +20,8 @@ import {
   WeekDays,
 } from "./date-constants";
 import { DateSCM } from "./date-scm";
+
+const FirstElement: number = 0;
 
 @Component({
   selector: "app-datepicker-scm",
@@ -40,6 +46,8 @@ export class DatepickerScmComponent implements OnInit {
     new EventEmitter();
 
   @ViewChild("datepicker", { static: true }) datepicker!: ElementRef;
+  @ViewChildren(SelectorScmComponent)
+  selectors!: QueryList<SelectorScmComponent>;
 
   constructor() {
     this.weekDays = WeekDays;
@@ -166,5 +174,19 @@ export class DatepickerScmComponent implements OnInit {
 
   public get elementRef(): ElementRef {
     return this.datepicker;
+  }
+
+  @HostListener("document:click", ["$event"])
+  onClick(event: any): void {
+    // let isSelector = this.selectors
+    //   .get(FirstElement)
+    //   ?.elementRef.nativeElement.contains(event.target);
+    let isDatepikerClicked = this.elementRef.nativeElement.contains(event.target);
+    // if (isSelector | isDatepiker) event.stopPropagation();
+    // else {
+    //   this.showMonthSelector = false;
+    //   this.showYearSelector = false;
+    // }
+    console.log("datepicker: ", isDatepikerClicked);
   }
 }

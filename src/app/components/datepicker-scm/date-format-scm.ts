@@ -1,6 +1,10 @@
+import { Injectable } from "@angular/core";
 import { Months } from "./date-constants";
 import { dateSCM } from "./date-scm";
 
+@Injectable({
+    providedIn: 'root',
+})
 export class DateParserFormatterSCM {
     parse(formattedDate: string, format: DateParserFormatter): dateSCM | null {
         return format.parseDate(formattedDate);
@@ -11,7 +15,7 @@ export class DateParserFormatterSCM {
     }
 }
 
-interface DateParserFormatter {
+export interface DateParserFormatter {
     formatDate(date: dateSCM): string;
     parseDate(formattedDate: string): dateSCM | null;
 }

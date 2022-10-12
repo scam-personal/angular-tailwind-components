@@ -3,6 +3,7 @@ import {
   ElementRef,
   EventEmitter,
   HostListener,
+  Input,
   OnInit,
   Output,
   QueryList,
@@ -19,6 +20,7 @@ import {
   Months,
   WeekDays,
 } from "./date-constants";
+import { DateParserFormatterSCM, DateFormat, DateParserFormatter, DefaultFormat } from "./date-format-scm";
 import { DateSCM } from "./date-scm";
 
 const FirstElement: number = 0;
@@ -42,14 +44,15 @@ export class DatepickerScmComponent implements OnInit {
   showMonthSelector: boolean = false;
 
   userSelectedDateSCM!: DateSCM;
-  @Output("onSelect") onDateSelected: EventEmitter<DateSCM> =
+  @Input() dateFormat: DateParserFormatter = DateFormat.MMDDYY;  
+  @Output("onSelect") onDateSelected: EventEmitter<string> =
     new EventEmitter();
 
   @ViewChild("datepicker", { static: true }) datepicker!: ElementRef;
   @ViewChildren(SelectorScmComponent)
   selectors!: QueryList<SelectorScmComponent>;
 
-  constructor() {
+  constructor(private dateParserFormatterSCM: DateParserFormatterSCM) {
     this.weekDays = WeekDays;
     this.months = Months;
     this.currentDateSCM = new DateSCM();
@@ -68,7 +71,8 @@ export class DatepickerScmComponent implements OnInit {
       this.showingDateSCM.month,
       selectedDay
     );
-    this.onDateSelected.emit(this.userSelectedDateSCM);
+    const formattedDate = this.dateParserFormatterSCM.format(this.userSelectedDateSCM.currentDate, this.dateFormat);
+    this.onDateSelected.emit(formattedDate);
   }
 
   isToday(day: number) {

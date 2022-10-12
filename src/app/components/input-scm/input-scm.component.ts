@@ -26,8 +26,8 @@ export class InputScmComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  dateSelected(date: any) {
-    this.dateInput = date.value;
+  dateSelected(date: string) {
+    this.dateInput = date;
     this.showdatePicker = false;
   }
 

@@ -1,4 +1,11 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from "@angular/core";
 import {
   AddYears,
   DaysModule,
@@ -29,7 +36,10 @@ export class DatepickerScmComponent implements OnInit {
   showMonthSelector: boolean = false;
 
   userSelectedDateSCM!: DateSCM;
-  @Output('onDateSelected') onDateSelected: EventEmitter<DateSCM> = new EventEmitter();
+  @Output("onSelect") onDateSelected: EventEmitter<DateSCM> =
+    new EventEmitter();
+
+  @ViewChild("datepicker", { static: true }) datepicker!: ElementRef;
 
   constructor() {
     this.weekDays = WeekDays;
@@ -152,5 +162,9 @@ export class DatepickerScmComponent implements OnInit {
         this.daysArray.slice(DaysModule * (index - 1), DaysModule * index)
       );
     return calendarDaysMatrix;
+  }
+
+  public get elementRef(): ElementRef {
+    return this.datepicker;
   }
 }

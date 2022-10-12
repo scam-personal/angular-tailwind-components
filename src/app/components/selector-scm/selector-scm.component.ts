@@ -1,10 +1,11 @@
 import {
   AfterViewInit,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
-  OnInit,
   Output,
+  ViewChild,
 } from "@angular/core";
 
 @Component({
@@ -18,6 +19,8 @@ export class SelectorScmComponent implements AfterViewInit {
 
   @Output("onSelected") onSelected: EventEmitter<number | string> =
     new EventEmitter();
+
+  @ViewChild("selector") selector!: ElementRef;
 
   constructor() {}
 

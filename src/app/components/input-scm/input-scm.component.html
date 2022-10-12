@@ -1,5 +1,7 @@
 <div class="dropdown-datepicker">
   <input
+    #inputDate
+    id="inputDate"
     class="w-40 border border-solid bg-slate-100"
     type="text"
     [(ngModel)]="dateInput"
@@ -7,6 +9,6 @@
   />
   <app-datepicker-scm
     *ngIf="showdatePicker"
-    (onDateSelected)="dateSelected($event)"
+    (onSelect)="dateSelected($event)"
   ></app-datepicker-scm>
 </div>

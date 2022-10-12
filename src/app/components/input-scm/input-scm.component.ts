@@ -46,6 +46,6 @@ export class InputScmComponent implements OnInit {
     let isDatepickerClicked =
       datepickerEelement?.elementRef.nativeElement.contains(event.target);
     if (!(isDatepickerClicked || isInputClicked)) this.showdatePicker = false;
-    console.log("input: ", isInputClicked);
+    // console.log("input: ", isInputClicked);
   }
 }

@@ -20,8 +20,8 @@ import {
   Months,
   WeekDays,
 } from "./date-constants";
-import { DateParserFormatterSCM, DateFormat, DateParserFormatter, DefaultFormat } from "./date-format-scm";
 import { DateSCM } from "./date-scm";
+import { supportedFormats } from "src/app/services/date-formatter-services/supported-formats/format-dictionary";
 
 const FirstElement: number = 0;
 
@@ -44,24 +44,30 @@ export class DatepickerScmComponent implements OnInit {
   showMonthSelector: boolean = false;
 
   userSelectedDateSCM!: DateSCM;
-  @Input() dateFormat: DateParserFormatter = DateFormat.MMDDYY;  
-  @Output("onSelect") onDateSelected: EventEmitter<string> =
-    new EventEmitter();
+  @Input() dateFormat: supportedFormats = "MMDDYY";
+  @Input() preSelectedDate: string = "";
+  @Output("onSelect") onDateSelected: EventEmitter<string> = new EventEmitter();
 
   @ViewChild("datepicker", { static: true }) datepicker!: ElementRef;
   @ViewChildren(SelectorScmComponent)
   selectors!: QueryList<SelectorScmComponent>;
 
-  constructor(private dateParserFormatterSCM: DateParserFormatterSCM) {
+  constructor() {
     this.weekDays = WeekDays;
     this.months = Months;
-    this.currentDateSCM = new DateSCM();
-    this.showingDateSCM = this.currentDateSCM;
-    this.prevDateSCM = this.currentDateSCM.getPreviousDate();
-    this.nextDateSCM = this.currentDateSCM.getNextDate();
   }
 
   ngOnInit(): void {
+    this.currentDateSCM = new DateSCM(null, null, null, this.dateFormat);
+    this.prevDateSCM = this.currentDateSCM.getPreviousDate();
+    this.nextDateSCM = this.currentDateSCM.getNextDate();
+    if (this.preSelectedDate.length > 0) {
+      this.currentDateSCM = this.currentDateSCM.getParsedDate(
+        this.preSelectedDate
+      );
+      this.userSelectedDateSCM = this.currentDateSCM;
+    }
+    this.showingDateSCM = this.currentDateSCM;
     this.getCalendarDays();
   }
 
@@ -69,15 +75,24 @@ export class DatepickerScmComponent implements OnInit {
     this.userSelectedDateSCM = new DateSCM(
       this.showingDateSCM.year,
       this.showingDateSCM.month,
-      selectedDay
+      selectedDay,
+      this.dateFormat
     );
-    const formattedDate = this.dateParserFormatterSCM.format(this.userSelectedDateSCM.currentDate, this.dateFormat);
-    this.onDateSelected.emit(formattedDate);
+    this.onDateSelected.emit(this.userSelectedDateSCM.getFormattedDate());
   }
 
   isToday(day: number) {
     return DateSCM.isToday(
       new Date(this.showingDateSCM.year, this.showingDateSCM.month - 1, day)
+    );
+  }
+
+  isSelected(day: number) {
+    return (
+      this.preSelectedDate.length > 0 &&
+      this.userSelectedDateSCM.baseDate.getDate() == day &&
+      this.userSelectedDateSCM.month == this.showingDateSCM.month &&
+      this.userSelectedDateSCM.year == this.showingDateSCM.year
     );
   }
 
@@ -185,12 +200,14 @@ export class DatepickerScmComponent implements OnInit {
     // let isSelector = this.selectors
     //   .get(FirstElement)
     //   ?.elementRef.nativeElement.contains(event.target);
-    let isDatepikerClicked = this.elementRef.nativeElement.contains(event.target);
+    let isDatepikerClicked = this.elementRef.nativeElement.contains(
+      event.target
+    );
     // if (isSelector | isDatepiker) event.stopPropagation();
     // else {
     //   this.showMonthSelector = false;
     //   this.showYearSelector = false;
     // }
-    console.log("datepicker: ", isDatepikerClicked);
+    // console.log("datepicker: ", isDatepikerClicked);
   }
 }

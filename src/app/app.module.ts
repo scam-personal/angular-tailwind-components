@@ -13,7 +13,6 @@ import { DatepickerScmComponent } from './components/datepicker-scm/datepicker-s
 import { SelectorScmComponent } from './components/selector-scm/selector-scm.component';
 import { InputScmComponent } from './components/input-scm/input-scm.component';
 import { FormsModule } from '@angular/forms';
-import { DateParserFormatterSCM } from './components/datepicker-scm/date-format-scm';
 
 @NgModule({
   declarations: [
@@ -33,7 +32,7 @@ import { DateParserFormatterSCM } from './components/datepicker-scm/date-format-
     AppRoutingModule,
     FormsModule
   ],
-  providers: [{ provide: DateParserFormatterSCM, useClass: DateParserFormatterSCM }],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

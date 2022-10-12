@@ -33,6 +33,10 @@
   @apply text-slate-400 cursor-default border-solid border-2;
 }
 
+.selected{
+  @apply rounded-full font-bold bg-slate-300;
+}
+
 table td:nth-child(1) {
   @apply bg-slate-300;
 }

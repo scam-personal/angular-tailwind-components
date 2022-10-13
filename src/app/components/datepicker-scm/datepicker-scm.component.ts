@@ -59,15 +59,14 @@ export class DatepickerScmComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentDateSCM = new DateSCM(null, null, null, this.dateFormat);
-    this.prevDateSCM = this.currentDateSCM.getPreviousDate();
-    this.nextDateSCM = this.currentDateSCM.getNextDate();
     if (this.preSelectedDate.length > 0) {
-      this.currentDateSCM = this.currentDateSCM.getParsedDate(
+      this.showingDateSCM = this.currentDateSCM.getParsedDate(
         this.preSelectedDate
       );
-      this.userSelectedDateSCM = this.currentDateSCM;
-    }
-    this.showingDateSCM = this.currentDateSCM;
+      this.userSelectedDateSCM = this.showingDateSCM;
+    } else this.showingDateSCM = this.currentDateSCM;
+    this.prevDateSCM = this.showingDateSCM.getPreviousDate();
+    this.nextDateSCM = this.showingDateSCM.getNextDate();
     this.getCalendarDays();
   }
 
@@ -193,21 +192,5 @@ export class DatepickerScmComponent implements OnInit {
 
   public get elementRef(): ElementRef {
     return this.datepicker;
-  }
-
-  @HostListener("document:click", ["$event"])
-  onClick(event: any): void {
-    // let isSelector = this.selectors
-    //   .get(FirstElement)
-    //   ?.elementRef.nativeElement.contains(event.target);
-    let isDatepikerClicked = this.elementRef.nativeElement.contains(
-      event.target
-    );
-    // if (isSelector | isDatepiker) event.stopPropagation();
-    // else {
-    //   this.showMonthSelector = false;
-    //   this.showYearSelector = false;
-    // }
-    // console.log("datepicker: ", isDatepikerClicked);
   }
 }

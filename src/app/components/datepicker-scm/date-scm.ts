@@ -72,13 +72,11 @@ export class DateSCM {
 
   public getParsedDate(strDate: string) {
     let parsedDate = DateFormatterSCMService.parse(strDate, this.formatter);
-    console.log("format", this.formatter);
     let aux = new DateSCM(
       parsedDate?.getFullYear(),
       parsedDate!.getMonth() + 1,
       parsedDate?.getDate()
     );
-    console.log("aux", aux.baseDate);
     return aux;
   }
 

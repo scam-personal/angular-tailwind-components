@@ -45,12 +45,4 @@ export class SelectorScmComponent implements AfterViewInit {
   public get elementRef(): ElementRef {
     return this.selector;
   }
-
-  @HostListener("document:click", ["$event"])
-  onClick(event: any): void {
-    let isSelectorClicked = this.elementRef.nativeElement.contains(
-      event.target
-    );
-    console.log("selector: ", isSelectorClicked);
-  }
 }

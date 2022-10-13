@@ -9,9 +9,12 @@ export class DefaultFormat implements DateParserFormatter {
   }
 
   parseDate(formattedDate: string): Date | null {
-    const century = 20;
+    const currentYear = new Date().getFullYear();
+    const currentCentury = Math.ceil(currentYear / 100) - 1;
+    const previousCentury = currentCentury - 1;
     const splittedDate = formattedDate.split("/");
-    const year = parseInt(century + splittedDate[2]);
+    const twoDigitYear = splittedDate[2];
+    const year = parseInt(twoDigitYear) > (currentYear % 100) + 30 ? parseInt(previousCentury + twoDigitYear) : parseInt(currentCentury + twoDigitYear)
     const day = parseInt(splittedDate[1]);
     const month = parseInt(splittedDate[0]) - 1;
     return new Date(year, month, day);

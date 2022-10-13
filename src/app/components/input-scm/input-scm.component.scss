@@ -1,3 +1,21 @@
 .dropdown-datepicker {
   @apply relative inline-block cursor-pointer;
 }
+
+input {
+  @apply border border-solid shadow-sm py-1 px-2 min-w-[180px];
+  @apply rounded-lg bg-white focus:border;
+  @apply focus:border-slate-400 outline-none;
+}
+
+p {
+  @apply absolute top-0 left-0 ml-2 mt-3 text-slate-500;
+}
+
+.input-scm {
+  @apply mt-2;
+}
+
+.input-scm:focus-within p {
+  @apply top-[-24px] text-sm;
+}

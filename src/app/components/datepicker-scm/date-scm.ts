@@ -1,30 +1,40 @@
+import { DateFormatterSCMService } from "src/app/services/date-formatter-services/date-formatter-scm.service";
+import { DateParserFormatter } from "src/app/services/date-formatter-services/date-service-formatter.interface";
+import {
+  DateFormat,
+  supportedFormats,
+} from "src/app/services/date-formatter-services/supported-formats/format-dictionary";
+
 export interface dateSCM {
-  currentDate: Date;
+  baseDate: Date;
   year: number;
   month: number;
   totalDays: number;
   firstDayNumber: number;
-  format: string;
-  value: string;
+  formatter: DateParserFormatter;
 }
 
 export class DateSCM {
   private currentDateSCM: dateSCM;
 
-  constructor(year?: number, month?: number, day?: number) {
+  constructor(
+    year?: number | null,
+    month?: number | null,
+    day?: number | null,
+    format?: supportedFormats
+  ) {
     let currDate: Date;
     if (year && month) currDate = new Date(year, month - 1, day ? day : 1);
     else currDate = new Date();
     let yearSCM = currDate.getFullYear();
     let monthSCM = currDate.getMonth() + 1;
     this.currentDateSCM = {
-      currentDate: currDate,
+      baseDate: currDate,
       year: yearSCM,
       month: monthSCM,
       totalDays: new Date(yearSCM, monthSCM, 0).getDate(),
       firstDayNumber: new Date(yearSCM, monthSCM - 1).getDay(),
-      format: "dd/mm/yyyy",
-      value: `${currDate.getDate()}/${monthSCM}/${yearSCM}`,
+      formatter: format ? DateFormat[format] : DateFormat.MMDDYY,
     };
   }
 
@@ -32,12 +42,12 @@ export class DateSCM {
     return this.currentDateSCM;
   }
 
-  public get format(): string {
-    return this.currentDateSCM.format;
+  public get baseDate(): Date {
+    return this.currentDateSCM.baseDate;
   }
 
-  public get value(): string {
-    return this.currentDateSCM.value;
+  get formatter(): DateParserFormatter {
+    return this.currentDateSCM.formatter;
   }
 
   public get year(): number {
@@ -56,12 +66,28 @@ export class DateSCM {
     return this.currentDateSCM.firstDayNumber;
   }
 
+  public getFormattedDate(): string {
+    return DateFormatterSCMService.format(this.baseDate, this.formatter);
+  }
+
+  public getParsedDate(strDate: string) {
+    let parsedDate = DateFormatterSCMService.parse(strDate, this.formatter);
+    console.log("format", this.formatter);
+    let aux = new DateSCM(
+      parsedDate?.getFullYear(),
+      parsedDate!.getMonth() + 1,
+      parsedDate?.getDate()
+    );
+    console.log("aux", aux.baseDate);
+    return aux;
+  }
+
   public static isToday(date?: Date | dateSCM) {
     let today = new Date();
     let isToday: boolean = false;
     let compareDate;
     if (date instanceof Date) compareDate = date;
-    else compareDate = date?.currentDate;
+    else compareDate = date?.baseDate;
     if (
       compareDate &&
       compareDate.getDate() == today.getDate() &&

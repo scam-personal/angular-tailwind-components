@@ -44,7 +44,10 @@
           </div>
           <ng-template #availableDay>
             <div
-              [ngClass]="{ today: isToday(dayCell) }"
+              [ngClass]="{
+                today: isToday(dayCell),
+                selected: isSelected(dayCell)
+              }"
               class="calendar-table-cell"
               (click)="userSelectDate(dayCell)"
             >

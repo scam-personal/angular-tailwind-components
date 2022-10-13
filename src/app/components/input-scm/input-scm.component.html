@@ -10,5 +10,7 @@
   <app-datepicker-scm
     *ngIf="showdatePicker"
     (onSelect)="dateSelected($event)"
+    [dateFormat]="'MMDDYY'"
+    [preSelectedDate]="dateInput"
   ></app-datepicker-scm>
 </div>

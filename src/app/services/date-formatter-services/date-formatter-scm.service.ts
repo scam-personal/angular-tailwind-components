@@ -1,6 +1,4 @@
 import { Injectable } from "@angular/core";
-import { Months } from "../../components/datepicker-scm/date-constants";
-import { dateSCM } from "../../components/datepicker-scm/date-scm";
 import { DateParserFormatter } from "./date-service-formatter.interface";
 
 @Injectable({

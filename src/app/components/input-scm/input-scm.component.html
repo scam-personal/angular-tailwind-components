@@ -12,5 +12,6 @@
     (onSelect)="dateSelected($event)"
     [dateFormat]="'MMMMDDYYYY'"
     [preSelectedDate]="dateInput"
+    (clickOutside)="hideDatePicker($event)"
   ></app-datepicker-scm>
 </div>

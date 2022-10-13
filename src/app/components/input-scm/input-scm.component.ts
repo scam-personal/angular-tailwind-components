@@ -1,7 +1,6 @@
 import {
   Component,
   ElementRef,
-  HostListener,
   OnInit,
   QueryList,
   ViewChild,
@@ -35,12 +34,7 @@ export class InputScmComponent implements OnInit {
     this.showdatePicker = !this.showdatePicker;
   }
 
-  onDatepickerClose(event: any) {
-    this.showdatePicker = false;
-  }
-
-  @HostListener("document:click", ["$event"])
-  onClick(event: any): void {
+  hideDatePicker(event: MouseEvent) {
     let datepickerEelement = this.datepickers.get(FirstElement);
     let isInputClicked = this.inputDate.nativeElement.contains(event.target);
     let isDatepickerClicked =

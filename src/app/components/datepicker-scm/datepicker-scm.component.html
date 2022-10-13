@@ -1,7 +1,7 @@
 <div #datepicker id="datepicker" class="calendar">
   <div class="calendar-header">
     <button (click)="goPrevMonth()">&#60;</button>
-    <div class="dropdown-selector">
+    <div class="dropdown-selector" (clickOutside)="closeMonths()">
       <p class="mx-1" (click)="showHideMonthSelector()">
         {{ months[showingDateSCM.currentDate.month - 1] }}
       </p>
@@ -12,7 +12,7 @@
         (onSelected)="optionSelected($event.toString())"
       ></app-selector-scm>
     </div>
-    <div class="dropdown-selector">
+    <div class="dropdown-selector" (clickOutside)="closeYears()">
       <p class="mx-1" (click)="showHideYearSelector()">
         {{ showingDateSCM.currentDate.year }}
       </p>
@@ -58,8 +58,4 @@
       </tr>
     </table>
   </div>
-  <!-- <div class="calendar-footer">
-    <button class="ok">OK</button>
-    <button>CANCEL</button>
-  </div> -->
 </div>

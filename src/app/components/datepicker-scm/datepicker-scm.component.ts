@@ -2,15 +2,11 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  HostListener,
   Input,
   OnInit,
   Output,
-  QueryList,
   ViewChild,
-  ViewChildren,
 } from "@angular/core";
-import { SelectorScmComponent } from "../selector-scm/selector-scm.component";
 import {
   AddYears,
   DaysModule,
@@ -22,8 +18,6 @@ import {
 } from "./date-constants";
 import { DateSCM } from "./date-scm";
 import { supportedFormats } from "src/app/services/date-formatter-services/supported-formats/format-dictionary";
-
-const FirstElement: number = 0;
 
 @Component({
   selector: "app-datepicker-scm",
@@ -49,8 +43,6 @@ export class DatepickerScmComponent implements OnInit {
   @Output("onSelect") onDateSelected: EventEmitter<string> = new EventEmitter();
 
   @ViewChild("datepicker", { static: true }) datepicker!: ElementRef;
-  @ViewChildren(SelectorScmComponent)
-  selectors!: QueryList<SelectorScmComponent>;
 
   constructor() {
     this.weekDays = WeekDays;
@@ -192,5 +184,13 @@ export class DatepickerScmComponent implements OnInit {
 
   public get elementRef(): ElementRef {
     return this.datepicker;
+  }
+
+  closeMonths() {
+    this.showMonthSelector = false;
+  }
+
+  closeYears() {
+    this.showYearSelector = false;
   }
 }

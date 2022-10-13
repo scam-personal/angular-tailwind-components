@@ -13,6 +13,7 @@ import { DatepickerScmComponent } from './components/datepicker-scm/datepicker-s
 import { SelectorScmComponent } from './components/selector-scm/selector-scm.component';
 import { InputScmComponent } from './components/input-scm/input-scm.component';
 import { FormsModule } from '@angular/forms';
+import { ClickOutsideDirective } from './components/click-outside.directive';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { FormsModule } from '@angular/forms';
     CardScmComponent,
     DatepickerScmComponent,
     SelectorScmComponent,
-    InputScmComponent
+    InputScmComponent,
+    ClickOutsideDirective
   ],
   imports: [
     BrowserModule,

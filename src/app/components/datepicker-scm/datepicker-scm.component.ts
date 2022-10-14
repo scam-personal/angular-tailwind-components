@@ -113,15 +113,15 @@ export class DatepickerScmComponent implements OnInit {
 
   goPrevMonth() {
     this.nextDateSCM = this.showingDateSCM;
-    this.showingDateSCM = this.prevDateSCM;
     this.prevDateSCM = this.showingDateSCM.getPreviousDate();
+    this.showingDateSCM = this.prevDateSCM;
     this.getCalendarDays();
   }
 
   goNextMonth() {
     this.prevDateSCM = this.showingDateSCM;
-    this.showingDateSCM = this.nextDateSCM;
     this.nextDateSCM = this.showingDateSCM.getNextDate();
+    this.showingDateSCM = this.nextDateSCM;
     this.getCalendarDays();
   }
 
